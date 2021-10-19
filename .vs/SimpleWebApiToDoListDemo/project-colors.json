@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "f56dee97-1c72-42bd-850b-81f236ee860f": {
+      "ProjectGuid": "f56dee97-1c72-42bd-850b-81f236ee860f",
+      "DisplayName": "SimpleWebApiToDoListDemo",
+      "ColorIndex": 0
+    },
+    "cf6b25df-9068-4d9e-b34f-2a96504b659c": {
+      "ProjectGuid": "cf6b25df-9068-4d9e-b34f-2a96504b659c",
+      "DisplayName": "SimpleWebApiToDoListDemo",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 2
+}

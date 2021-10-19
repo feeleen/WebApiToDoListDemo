@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31808.319
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWebApiToDoListDemo", "SimpleWebApiToDoListDemo\SimpleWebApiToDoListDemo.csproj", "{CF6B25DF-9068-4D9E-B34F-2A96504B659C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListTests", "ToDoListTests\ToDoListTests.csproj", "{93515802-9559-4FEC-9123-00B28E803A31}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF6B25DF-9068-4D9E-B34F-2A96504B659C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF6B25DF-9068-4D9E-B34F-2A96504B659C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF6B25DF-9068-4D9E-B34F-2A96504B659C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF6B25DF-9068-4D9E-B34F-2A96504B659C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93515802-9559-4FEC-9123-00B28E803A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93515802-9559-4FEC-9123-00B28E803A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93515802-9559-4FEC-9123-00B28E803A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93515802-9559-4FEC-9123-00B28E803A31}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5621418-4A17-49B4-9F2D-2E53DF03A067}
+	EndGlobalSection
+EndGlobal
