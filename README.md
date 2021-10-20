@@ -1,10 +1,12 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/qsx5k8qr65aeectm?svg=true)](https://ci.appveyor.com/project/feeleen/webapitodolistdemo)
 
 # WebApiToDoListDemo
-Demo .NET Core Web Api project with logging and database operations using linq2db
+Demo .NET Core Web Api project with logging and database operations using linq2db. 
+
+Project with tests (mock & test database) included.
 
 
-SqlServer datatabase script:
+SqlServer database script:
 
 ```sql
 CREATE DATABASE [ToDoList]
