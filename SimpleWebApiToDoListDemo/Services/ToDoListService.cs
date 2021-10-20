@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace SimpleWebApiToDoListDemo.Services
 {
-    public class ToDoListService
+    public class ToDoListService : IToDoListService
     {
-        public static async Task<List<ToDoList>> GetRecordsAsync(DataFilter filter)
+        public async Task<List<ToDoList>> GetRecordsAsync(DataFilter filter)
         {
             using (var db = new DbContext())
             {
@@ -44,7 +44,7 @@ namespace SimpleWebApiToDoListDemo.Services
             }
         }
 
-        public static async Task<ToDoList> GetRecordAsync(long id)
+        public async Task<ToDoList> GetRecordAsync(long id)
         {
             using (var db = new DbContext())
             {
@@ -54,11 +54,14 @@ namespace SimpleWebApiToDoListDemo.Services
             }
         }
 
-        public static async Task<ToDoList> InsertAsync(string item)
+        public async Task<ToDoList> InsertAsync(string itemName)
         {
             using (var db = new DbContext())
             {
-                var res = Convert.ToInt64(await db.InsertWithIdentityAsync(new ToDoList() { Name = item }));
+                if (string.IsNullOrWhiteSpace(itemName))
+                    throw new ArgumentNullException($"{nameof(itemName)} can't be empty");
+
+                var res = Convert.ToInt64(await db.InsertWithIdentityAsync(new ToDoList() { Name = itemName }));
 
                 if (res > 0)
                 {
@@ -72,7 +75,7 @@ namespace SimpleWebApiToDoListDemo.Services
             }
         }
 
-        public static async Task<int> UpdateAsync(ToDoList todoItem)
+        public async Task<int> UpdateAsync(ToDoList todoItem)
         {
             using (var db = new DbContext())
             {
@@ -88,7 +91,7 @@ namespace SimpleWebApiToDoListDemo.Services
         }
         
         
-        public static async Task<int> DeleteAsync(long id)
+        public async Task<int> DeleteAsync(long id)
         {
             if (id < 0)
             {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SimpleWebApiToDoListDemo.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), Produces("application/json")]
     public class ApiControllerBase<T> : ControllerBase
     {
         protected readonly ILogger<T> logger;

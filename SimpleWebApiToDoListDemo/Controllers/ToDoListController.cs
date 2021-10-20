@@ -11,8 +11,10 @@ namespace SimpleWebApiToDoListDemo.Controllers
 {
     public class ToDoListController : ApiControllerBase<ToDoListController>
     {
-        public ToDoListController(ILogger<ToDoListController> logger) : base(logger)
+        private readonly IToDoListService todoService;
+        public ToDoListController(ILogger<ToDoListController> logger, IToDoListService todoService) : base(logger)
         {
+            this.todoService = todoService;
         }
 
         [HttpGet]
@@ -20,7 +22,7 @@ namespace SimpleWebApiToDoListDemo.Controllers
         {
             return await Execute(async () => 
             { 
-                 return ResultWrapper.Success(await ToDoListService.GetRecordsAsync(filter));
+                 return ResultWrapper.Success(await todoService.GetRecordsAsync(filter));
             });
         }
 
@@ -29,18 +31,18 @@ namespace SimpleWebApiToDoListDemo.Controllers
         {
             return await Execute(async () =>
             {
-                var todoItem = await ToDoListService.GetRecordAsync(id);
+                var todoItem = await todoService.GetRecordAsync(id);
 
                 return todoItem == null ? ResultWrapper.NotFound<ToDoList>() : ResultWrapper.Success(todoItem);
             });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(string todoName)
+        public async Task<IActionResult> Post([FromForm, FromBody] string todoName)
         {
             return await Execute(async () =>
             {
-                var newTodoItem = await ToDoListService.InsertAsync(todoName);
+                var newTodoItem = await todoService.InsertAsync(todoName);
 
                 return newTodoItem == null ? ResultWrapper.Fail<ToDoList>() : ResultWrapper.Success(newTodoItem);
             });
@@ -51,7 +53,7 @@ namespace SimpleWebApiToDoListDemo.Controllers
         {
             return await Execute(async () =>
             {
-                var res = await ToDoListService.UpdateAsync(todoItem);
+                var res = await todoService.UpdateAsync(todoItem);
 
                 return res > 0 ? ResultWrapper.Success(todoItem) : ResultWrapper.Fail<ToDoList>();
             });
@@ -62,7 +64,7 @@ namespace SimpleWebApiToDoListDemo.Controllers
         {
             return await Execute(async () =>
             {
-                var res = await ToDoListService.DeleteAsync(id);
+                var res = await todoService.DeleteAsync(id);
 
                 return res == 0 ? ResultWrapper.NotFound() : ResultWrapper.Success();
             });
