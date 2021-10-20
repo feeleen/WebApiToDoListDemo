@@ -59,7 +59,7 @@ namespace SimpleWebApiToDoListDemo.Controllers
             });
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:long}")]
         public async Task<IActionResult> Delete(long id)
         {
             return await Execute(async () =>

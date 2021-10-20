@@ -16,6 +16,11 @@ namespace ToDoListTests
             if (id < 0)
                 throw new System.ArgumentException(nameof(id));
 
+            if (id > 1000)
+            {
+                return await Task.FromResult(0);
+            }
+
             return await Task.FromResult(1);
         }
 
@@ -26,7 +31,7 @@ namespace ToDoListTests
 
         public async Task<List<ToDoList>> GetRecordsAsync(DataFilter filter)
         {
-            return await Task.FromResult(new List<ToDoList>() { new ToDoList() { ID = 1, Name = "Test" } });
+            return await Task.FromResult(new List<ToDoList>() { new ToDoList() { ID = 1, Name = "First" } });
         }
 
         public async Task<ToDoList> InsertAsync(string itemName)
