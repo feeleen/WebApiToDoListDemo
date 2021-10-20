@@ -1,11 +1,16 @@
-﻿using System;
+﻿using LinqToDB.Mapping;
+using System;
 
 namespace SimpleWebApiToDoListDemo.Model
 {
+    [Table("ToDoList")]
     public class ToDoList : EntityBase<ToDoList>
     {
+        [Column]
         public string Name { get; set; }
+        [Column]
         public bool IsComplete { get; set; }
-        public DateTime DateCreated { get; set; } = DateTime.Now;
+        [Column]
+        public DateTime DateCreated { get; private set; } = DateTime.Now;
     }
 }

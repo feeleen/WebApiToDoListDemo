@@ -2,99 +2,70 @@
 using Microsoft.Extensions.Logging;
 using SimpleWebApiToDoListDemo.Model;
 using SimpleWebApiToDoListDemo.Services;
+using SimpleWebApiToDoListDemo.Wrapper;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SimpleWebApiToDoListDemo.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ToDoListController : ControllerBase
+    public class ToDoListController : ApiControllerBase<ToDoListController>
     {
-        private readonly ILogger<WeatherForecastController> logger;
-
-        public ToDoListController(ILogger<WeatherForecastController> logger)
+        public ToDoListController(ILogger<ToDoListController> logger) : base(logger)
         {
-            this.logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ToDoList>>> Get([FromQuery] DataFilter filter)
+        public async Task<IActionResult> Get([FromQuery] DataFilter filter)
         {
-            try
-            {
-                return await ToDoListService.GetRecordsAsync(filter);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message, filter);
-                return BadRequest(ex.Message);
-            }
+            return await Execute(async () => 
+            { 
+                 return ResultWrapper.Success(await ToDoListService.GetRecordsAsync(filter));
+            });
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ToDoList>> Get(long id)
+        public async Task<IActionResult> Get(long id)
         {
-            try
+            return await Execute(async () =>
             {
                 var todoItem = await ToDoListService.GetRecordAsync(id);
 
-                return (todoItem == null) ? NotFound() : new ObjectResult(todoItem);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message, id);
-                return BadRequest(ex.Message);
-            }
+                return todoItem == null ? ResultWrapper.NotFound<ToDoList>() : ResultWrapper.Success(todoItem);
+            });
         }
 
         [HttpPost]
-        public async Task<ActionResult<ToDoList>> Post(string todoName)
+        public async Task<IActionResult> Post(string todoName)
         {
-            try
+            return await Execute(async () =>
             {
                 var newTodoItem = await ToDoListService.InsertAsync(todoName);
 
-                return newTodoItem == null ? BadRequest() : Ok(newTodoItem);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message, todoName);
-                return BadRequest(ex.Message);
-            }
+                return newTodoItem == null ? ResultWrapper.Fail<ToDoList>() : ResultWrapper.Success(newTodoItem);
+            });
         }
 
         [HttpPut]
-        public async Task<ActionResult<ToDoList>> Put(ToDoList todoItem)
+        public async Task<IActionResult> Put(ToDoList todoItem)
         {
-            try
+            return await Execute(async () =>
             {
                 var res = await ToDoListService.UpdateAsync(todoItem);
 
-                return res > 0 ? Ok(todoItem) : NotFound();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message, todoItem);
-                return BadRequest(ex.Message);
-            }
+                return res > 0 ? ResultWrapper.Success(todoItem) : ResultWrapper.Fail<ToDoList>();
+            });
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            try
+            return await Execute(async () =>
             {
                 var res = await ToDoListService.DeleteAsync(id);
 
-                return res == 0 ? NotFound() : Ok();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.Message, id);
-                return BadRequest(ex.Message);
-            }
+                return res == 0 ? ResultWrapper.NotFound() : ResultWrapper.Success();
+            });
         }
     }
 }

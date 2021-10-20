@@ -6,6 +6,7 @@ namespace SimpleWebApiToDoListDemo.Model
     {
         [Column]
         [Identity]
+        [PrimaryKey]
         public long ID { get; set; }
     }
 }
