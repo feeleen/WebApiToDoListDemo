@@ -49,6 +49,12 @@ namespace ToDoListTests
             var obj = JsonConvert.DeserializeObject<ResultWrapper<ToDoList>>(result);
 
             Assert.AreEqual("NewRecord", obj.Data.Name);
+
+            response = await client.GetAsync($"api/ToDoList/{obj.Data.ID}");
+            result = await response.Content.ReadAsStringAsync();
+            obj = JsonConvert.DeserializeObject<ResultWrapper<ToDoList>>(result);
+
+            Assert.AreEqual("NewRecord", obj.Data.Name);
         }
 
         [TestMethod]
