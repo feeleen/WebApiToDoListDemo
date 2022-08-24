@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
-using SimpleWebApiToDoListDemo.Data;
+using SimpleWebApiToDoListDemo.Extentions;
 using SimpleWebApiToDoListDemo.Services;
 using System;
 using System.Collections.Generic;
@@ -49,9 +49,11 @@ namespace SimpleWebApiToDoListDemo
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseCustomExceptionHandler();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SimpleWebApiToDoListDemo v1"));
             }

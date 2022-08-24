@@ -20,54 +20,39 @@ namespace SimpleWebApiToDoListDemo.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] DataFilter filter)
         {
-            return await Execute(async () => 
-            { 
-                 return ResultWrapper.Success(await todoService.GetRecordsAsync(filter));
-            });
+            return Ok(ResultWrapper.Success(await todoService.GetRecordsAsync(filter)));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(long id)
         {
-            return await Execute(async () =>
-            {
-                var todoItem = await todoService.GetRecordAsync(id);
+            var todoItem = await todoService.GetRecordAsync(id);
 
-                return todoItem == null ? ResultWrapper.NotFound<ToDoList>() : ResultWrapper.Success(todoItem);
-            });
+            return Ok(todoItem == null ? ResultWrapper.NotFound<ToDoList>() : ResultWrapper.Success(todoItem));
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromForm, FromBody] string todoName)
         {
-            return await Execute(async () =>
-            {
-                var newTodoItem = await todoService.InsertAsync(todoName);
+            var newTodoItem = await todoService.InsertAsync(todoName);
 
-                return newTodoItem == null ? ResultWrapper.Fail<ToDoList>() : ResultWrapper.Success(newTodoItem);
-            });
+            return Ok(newTodoItem == null ? ResultWrapper.Fail<ToDoList>() : ResultWrapper.Success(newTodoItem));
         }
 
         [HttpPut]
         public async Task<IActionResult> Put(ToDoList todoItem)
         {
-            return await Execute(async () =>
-            {
-                var res = await todoService.UpdateAsync(todoItem);
+            var res = await todoService.UpdateAsync(todoItem);
 
-                return res > 0 ? ResultWrapper.Success(todoItem) : ResultWrapper.Fail<ToDoList>();
-            });
+            return Ok(res > 0 ? ResultWrapper.Success(todoItem) : ResultWrapper.Fail<ToDoList>());
         }
 
         [HttpDelete("{id:long}")]
         public async Task<IActionResult> Delete(long id)
         {
-            return await Execute(async () =>
-            {
-                var res = await todoService.DeleteAsync(id);
+            var res = await todoService.DeleteAsync(id);
 
-                return res == 0 ? ResultWrapper.NotFound() : ResultWrapper.Success();
-            });
+            return Ok(res == 0 ? ResultWrapper.NotFound() : ResultWrapper.Success());
         }
     }
 }
